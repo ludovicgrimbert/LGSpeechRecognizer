@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Speech
 
 @DependencyClient
-struct SpeechClient {
+public struct SpeechClient : Sendable{
     var finishTask: @Sendable () async -> Void
     var requestAuthorization: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus = {
         .notDetermined
@@ -27,7 +27,7 @@ struct SpeechClient {
 }
 
 extension SpeechClient: TestDependencyKey {
-    static var previewValue: Self {
+    public static var previewValue: Self {
         let isRecording = LockIsolated(false)
         
         return Self(
@@ -71,7 +71,7 @@ extension SpeechClient: TestDependencyKey {
         )
     }
     
-    static let testValue = Self()
+    public static let testValue = Self()
 }
 
 extension DependencyValues {
@@ -85,7 +85,7 @@ extension DependencyValues {
 //************************** LIVE ******************
 
 extension SpeechClient: DependencyKey {
-    static var liveValue: Self {
+    public static var liveValue: Self {
         let speech = Speech()
         return Self(
             finishTask: {
