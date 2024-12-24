@@ -15,25 +15,25 @@ import Speech
 // and so they aren't testable out the box. We define struct versions of those types to make
 // them easier to use and test.
 
-struct SpeechRecognitionMetadata: Equatable {
+public struct SpeechRecognitionMetadata: Equatable, Sendable {
     var averagePauseDuration: TimeInterval
     var speakingRate: Double
     var voiceAnalytics: VoiceAnalytics?
 }
 
-struct SpeechRecognitionResult: Equatable {
+public struct SpeechRecognitionResult: Equatable, Sendable {
     var bestTranscription: Transcription
     var isFinal: Bool
     var speechRecognitionMetadata: SpeechRecognitionMetadata?
     var transcriptions: [Transcription]
 }
 
-struct Transcription: Equatable {
+public struct Transcription: Equatable, Sendable {
     var formattedString: String
     var segments: [TranscriptionSegment]
 }
 
-struct TranscriptionSegment: Equatable {
+public struct TranscriptionSegment: Equatable, Sendable {
     var alternativeSubstrings: [String]
     var confidence: Float
     var duration: TimeInterval
@@ -41,14 +41,14 @@ struct TranscriptionSegment: Equatable {
     var timestamp: TimeInterval
 }
 
-struct VoiceAnalytics: Equatable {
+public struct VoiceAnalytics: Equatable, Sendable {
     var jitter: AcousticFeature
     var pitch: AcousticFeature
     var shimmer: AcousticFeature
     var voicing: AcousticFeature
 }
 
-struct AcousticFeature: Equatable {
+public struct AcousticFeature: Equatable, Sendable {
     var acousticFeatureValuePerFrame: [Double]
     var frameDuration: TimeInterval
 }

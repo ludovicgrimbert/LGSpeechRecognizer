@@ -14,12 +14,12 @@ public struct SpeechClient : Sendable{
     public var requestAuthorization: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus = {
         .notDetermined
     }
-    var startTask:
+   public var startTask:
     @Sendable (_ request: SFSpeechAudioBufferRecognitionRequest) async -> AsyncThrowingStream<
         SpeechRecognitionResult, Error
     > = { _ in .finished() }
     
-    enum Failure: Error, Equatable {
+   public enum Failure: Error, Equatable {
         case taskError
         case couldntStartAudioEngine
         case couldntConfigureAudioSession
