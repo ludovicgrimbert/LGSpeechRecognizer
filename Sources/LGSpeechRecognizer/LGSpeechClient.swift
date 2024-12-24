@@ -10,7 +10,7 @@ import Speech
 
 @DependencyClient
 public struct SpeechClient : Sendable{
-    var finishTask: @Sendable () async -> Void
+    public var finishTask: @Sendable () async -> Void
     var requestAuthorization: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus = {
         .notDetermined
     }
