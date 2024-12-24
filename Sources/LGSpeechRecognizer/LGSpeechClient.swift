@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Speech
 
 @DependencyClient
-public struct SpeechClient : Sendable{
+public struct SpeechClient : Sendable {
     public var finishTask: @Sendable () async -> Void
     public var requestAuthorization: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus = {
         .notDetermined

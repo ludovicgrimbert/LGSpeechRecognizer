@@ -53,7 +53,7 @@ public struct AcousticFeature: Equatable, Sendable {
     var frameDuration: TimeInterval
 }
 
-extension SpeechRecognitionMetadata {
+public extension SpeechRecognitionMetadata {
     init(_ speechRecognitionMetadata: SFSpeechRecognitionMetadata) {
         self.averagePauseDuration = speechRecognitionMetadata.averagePauseDuration
         self.speakingRate = speechRecognitionMetadata.speakingRate
@@ -61,7 +61,7 @@ extension SpeechRecognitionMetadata {
     }
 }
 
-extension SpeechRecognitionResult {
+public extension SpeechRecognitionResult {
     init(_ speechRecognitionResult: SFSpeechRecognitionResult) {
         self.bestTranscription = Transcription(speechRecognitionResult.bestTranscription)
         self.isFinal = speechRecognitionResult.isFinal
@@ -71,14 +71,14 @@ extension SpeechRecognitionResult {
     }
 }
 
-extension Transcription {
+public extension Transcription {
     init(_ transcription: SFTranscription) {
         self.formattedString = transcription.formattedString
         self.segments = transcription.segments.map(TranscriptionSegment.init)
     }
 }
 
-extension TranscriptionSegment {
+public extension TranscriptionSegment {
     init(_ transcriptionSegment: SFTranscriptionSegment) {
         self.alternativeSubstrings = transcriptionSegment.alternativeSubstrings
         self.confidence = transcriptionSegment.confidence
@@ -88,7 +88,7 @@ extension TranscriptionSegment {
     }
 }
 
-extension VoiceAnalytics {
+public extension VoiceAnalytics {
     init(_ voiceAnalytics: SFVoiceAnalytics) {
         self.jitter = AcousticFeature(voiceAnalytics.jitter)
         self.pitch = AcousticFeature(voiceAnalytics.pitch)
@@ -97,7 +97,7 @@ extension VoiceAnalytics {
     }
 }
 
-extension AcousticFeature {
+public extension AcousticFeature {
     init(_ acousticFeature: SFAcousticFeature) {
         self.acousticFeatureValuePerFrame = acousticFeature.acousticFeatureValuePerFrame
         self.frameDuration = acousticFeature.frameDuration
