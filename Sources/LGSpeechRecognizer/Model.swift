@@ -30,7 +30,7 @@ public struct SpeechRecognitionResult: Equatable, Sendable {
 
 public struct Transcription: Equatable, Sendable {
     var formattedString: String
-    var segments: [TranscriptionSegment]
+//    var segments: [TranscriptionSegment]
 }
 
 public struct TranscriptionSegment: Equatable, Sendable {
@@ -54,7 +54,7 @@ public struct AcousticFeature: Equatable, Sendable {
 }
 
 public extension SpeechRecognitionMetadata {
-    init(_ speechRecognitionMetadata: SFSpeechRecognitionMetadata) {
+    public init(_ speechRecognitionMetadata: SFSpeechRecognitionMetadata) {
         self.averagePauseDuration = speechRecognitionMetadata.averagePauseDuration
         self.speakingRate = speechRecognitionMetadata.speakingRate
         self.voiceAnalytics = speechRecognitionMetadata.voiceAnalytics.map(VoiceAnalytics.init)
@@ -62,7 +62,7 @@ public extension SpeechRecognitionMetadata {
 }
 
 public extension SpeechRecognitionResult {
-    init(_ speechRecognitionResult: SFSpeechRecognitionResult) {
+    public init(_ speechRecognitionResult: SFSpeechRecognitionResult) {
         self.bestTranscription = Transcription(speechRecognitionResult.bestTranscription)
         self.isFinal = speechRecognitionResult.isFinal
         self.speechRecognitionMetadata = speechRecognitionResult.speechRecognitionMetadata
@@ -71,15 +71,15 @@ public extension SpeechRecognitionResult {
     }
 }
 
-public extension Transcription {
-    init(_ transcription: SFTranscription) {
+public extension Transcription{
+    public init(_ transcription: SFTranscription) {
         self.formattedString = transcription.formattedString
-        self.segments = transcription.segments.map(TranscriptionSegment.init)
+//        self.segments = transcription.segments.map(TranscriptionSegment.init)
     }
 }
 
 public extension TranscriptionSegment {
-    init(_ transcriptionSegment: SFTranscriptionSegment) {
+    public init(_ transcriptionSegment: SFTranscriptionSegment) {
         self.alternativeSubstrings = transcriptionSegment.alternativeSubstrings
         self.confidence = transcriptionSegment.confidence
         self.duration = transcriptionSegment.duration
@@ -89,7 +89,7 @@ public extension TranscriptionSegment {
 }
 
 public extension VoiceAnalytics {
-    init(_ voiceAnalytics: SFVoiceAnalytics) {
+    public init(_ voiceAnalytics: SFVoiceAnalytics) {
         self.jitter = AcousticFeature(voiceAnalytics.jitter)
         self.pitch = AcousticFeature(voiceAnalytics.pitch)
         self.shimmer = AcousticFeature(voiceAnalytics.shimmer)
@@ -98,7 +98,7 @@ public extension VoiceAnalytics {
 }
 
 public extension AcousticFeature {
-    init(_ acousticFeature: SFAcousticFeature) {
+    public init(_ acousticFeature: SFAcousticFeature) {
         self.acousticFeatureValuePerFrame = acousticFeature.acousticFeatureValuePerFrame
         self.frameDuration = acousticFeature.frameDuration
     }
