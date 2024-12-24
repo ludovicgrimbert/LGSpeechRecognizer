@@ -16,45 +16,45 @@ import Speech
 // them easier to use and test.
 
 public struct SpeechRecognitionMetadata: Equatable, Sendable {
-    var averagePauseDuration: TimeInterval
-    var speakingRate: Double
-    var voiceAnalytics: VoiceAnalytics?
+    public var averagePauseDuration: TimeInterval
+    public var speakingRate: Double
+    public var voiceAnalytics: VoiceAnalytics?
 }
 
 public struct SpeechRecognitionResult: Equatable, Sendable {
-    var bestTranscription: Transcription
-    var isFinal: Bool
-    var speechRecognitionMetadata: SpeechRecognitionMetadata?
-    var transcriptions: [Transcription]
+    public var bestTranscription: Transcription
+    public var isFinal: Bool
+    public var speechRecognitionMetadata: SpeechRecognitionMetadata?
+    public var transcriptions: [Transcription]
 }
 
 public struct Transcription: Equatable, Sendable {
-    var formattedString: String
-//    var segments: [TranscriptionSegment]
+    public var formattedString: String
+    public var segments: [TranscriptionSegment]
 }
 
 public struct TranscriptionSegment: Equatable, Sendable {
-    var alternativeSubstrings: [String]
-    var confidence: Float
-    var duration: TimeInterval
-    var substring: String
-    var timestamp: TimeInterval
+    public var alternativeSubstrings: [String]
+    public  var confidence: Float
+    public  var duration: TimeInterval
+    public  var substring: String
+    public var timestamp: TimeInterval
 }
 
 public struct VoiceAnalytics: Equatable, Sendable {
-    var jitter: AcousticFeature
-    var pitch: AcousticFeature
-    var shimmer: AcousticFeature
-    var voicing: AcousticFeature
+    public var jitter: AcousticFeature
+    public var pitch: AcousticFeature
+    public var shimmer: AcousticFeature
+    public var voicing: AcousticFeature
 }
 
 public struct AcousticFeature: Equatable, Sendable {
-    var acousticFeatureValuePerFrame: [Double]
-    var frameDuration: TimeInterval
+    public  var acousticFeatureValuePerFrame: [Double]
+    public var frameDuration: TimeInterval
 }
 
 public extension SpeechRecognitionMetadata {
-    public init(_ speechRecognitionMetadata: SFSpeechRecognitionMetadata) {
+     init(_ speechRecognitionMetadata: SFSpeechRecognitionMetadata) {
         self.averagePauseDuration = speechRecognitionMetadata.averagePauseDuration
         self.speakingRate = speechRecognitionMetadata.speakingRate
         self.voiceAnalytics = speechRecognitionMetadata.voiceAnalytics.map(VoiceAnalytics.init)
@@ -62,7 +62,7 @@ public extension SpeechRecognitionMetadata {
 }
 
 public extension SpeechRecognitionResult {
-    public init(_ speechRecognitionResult: SFSpeechRecognitionResult) {
+     init(_ speechRecognitionResult: SFSpeechRecognitionResult) {
         self.bestTranscription = Transcription(speechRecognitionResult.bestTranscription)
         self.isFinal = speechRecognitionResult.isFinal
         self.speechRecognitionMetadata = speechRecognitionResult.speechRecognitionMetadata
@@ -72,14 +72,14 @@ public extension SpeechRecognitionResult {
 }
 
 public extension Transcription{
-    public init(_ transcription: SFTranscription) {
+     init(_ transcription: SFTranscription) {
         self.formattedString = transcription.formattedString
-//        self.segments = transcription.segments.map(TranscriptionSegment.init)
+        self.segments = transcription.segments.map(TranscriptionSegment.init)
     }
 }
 
 public extension TranscriptionSegment {
-    public init(_ transcriptionSegment: SFTranscriptionSegment) {
+     init(_ transcriptionSegment: SFTranscriptionSegment) {
         self.alternativeSubstrings = transcriptionSegment.alternativeSubstrings
         self.confidence = transcriptionSegment.confidence
         self.duration = transcriptionSegment.duration
@@ -89,7 +89,7 @@ public extension TranscriptionSegment {
 }
 
 public extension VoiceAnalytics {
-    public init(_ voiceAnalytics: SFVoiceAnalytics) {
+     init(_ voiceAnalytics: SFVoiceAnalytics) {
         self.jitter = AcousticFeature(voiceAnalytics.jitter)
         self.pitch = AcousticFeature(voiceAnalytics.pitch)
         self.shimmer = AcousticFeature(voiceAnalytics.shimmer)
@@ -98,7 +98,7 @@ public extension VoiceAnalytics {
 }
 
 public extension AcousticFeature {
-    public init(_ acousticFeature: SFAcousticFeature) {
+     init(_ acousticFeature: SFAcousticFeature) {
         self.acousticFeatureValuePerFrame = acousticFeature.acousticFeatureValuePerFrame
         self.frameDuration = acousticFeature.frameDuration
     }

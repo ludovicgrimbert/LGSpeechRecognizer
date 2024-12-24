@@ -57,8 +57,8 @@ extension SpeechClient: TestDependencyKey {
                             continuation.yield(
                                 SpeechRecognitionResult(
                                     bestTranscription: Transcription(
-                                        formattedString: text
-//                                        segments: []
+                                        formattedString: text,
+                                        segments: []
                                     ),
                                     isFinal: false,
                                     transcriptions: []
