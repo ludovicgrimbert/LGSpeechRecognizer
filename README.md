@@ -72,10 +72,20 @@ prompt — for SwiftUI previews and tests. Your own fake is a conformance to
 | `requestAuthorization() -> SFSpeechRecognizerAuthorizationStatus` | `-> SpeechAuthorizationStatus` (adds `.microphoneDenied`, `.isAuthorized`) |
 | `SpeechClient.Failure` | `SpeechRecognitionError` (`LocalizedError`, keeps the underlying error) |
 
+## Example app
+
+Open `LGSpeechRecognizer.xcworkspace`: the package next to `Example/LGSpeechRecognizerExample`, a
+one-screen app built against the working tree — pick the live or the preview recogniser, tweak
+the configuration, start/stop, watch the transcript, the authorization status and the errors.
+Generated with [xcodegen](https://github.com/yonaskolb/XcodeGen) from `Example/project.yml`
+(`cd Example && xcodegen generate` after adding files). The simulator has no microphone by
+default: use the preview recogniser there, the live one on a device.
+
 ## Development
 
-iOS-only package; build and test through a simulator:
+iOS-only package; build and test through a simulator (the workspace carries a shared
+`LGSpeechRecognizer` scheme with the test action):
 
 ```sh
-xcodebuild test -scheme LGSpeechRecognizer -destination 'platform=iOS Simulator,name=iPhone 17'
+xcodebuild test -workspace LGSpeechRecognizer.xcworkspace -scheme LGSpeechRecognizer -destination 'platform=iOS Simulator,name=iPhone 17'
 ```

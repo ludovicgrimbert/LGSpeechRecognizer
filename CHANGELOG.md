@@ -3,6 +3,13 @@
 All notable changes to this package. [Keep a Changelog](https://keepachangelog.com) format,
 [SemVer](https://semver.org) — on `0.x`, minor versions may break source compatibility.
 
+## [0.3.1] - 2026-09-12
+
+### Added
+- `LGSpeechRecognizer.xcworkspace` (package + example, shared scheme with the test action) and
+  `Example/LGSpeechRecognizerExample` (xcodegen): live/preview recogniser, configuration knobs,
+  transcript, authorization status and errors on one screen.
+
 ## [0.3.0] - 2026-09-12
 
 ### Added
