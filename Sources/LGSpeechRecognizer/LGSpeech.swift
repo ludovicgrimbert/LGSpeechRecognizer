@@ -6,9 +6,9 @@
 //
 
 
-import ComposableArchitecture
 import Speech
 
+/// Owns the audio engine and the recognition task behind ``SpeechClient/liveValue``.
 public actor Speech {
     var audioEngine: AVAudioEngine? = nil
     var recognitionTask: SFSpeechRecognitionTask? = nil

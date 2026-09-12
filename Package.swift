@@ -7,24 +7,18 @@ let package = Package(
     name: "LGSpeechRecognizer",
     platforms: [.iOS(.v17)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "LGSpeechRecognizer",
             targets: ["LGSpeechRecognizer"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.0.0")
-    ],
+    // No dependencies: plain Swift Concurrency over the Speech framework.
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "LGSpeechRecognizer",
-            dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
-            ]
+            name: "LGSpeechRecognizer"
         ),
-
-        //TODO: test target
+        .testTarget(
+            name: "LGSpeechRecognizerTests",
+            dependencies: ["LGSpeechRecognizer"]
+        ),
     ]
 )
