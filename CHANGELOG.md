@@ -3,6 +3,14 @@
 All notable changes to this package. [Keep a Changelog](https://keepachangelog.com) format,
 [SemVer](https://semver.org) — on `0.x`, minor versions may break source compatibility.
 
+## [1.0.0] - 2026-09-12
+
+First stable release: the API is the `SpeechRecognizer` protocol introduced in 0.3.0.
+
+### Removed
+- `SpeechClient` and `SpeechClient.Failure` (deprecated in 0.3.0) — see the README migration table.
+- The internal `SpeechRecognitionConfiguration.init(_ request:)` that only served it.
+
 ## [0.3.1] - 2026-09-12
 
 ### Added

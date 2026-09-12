@@ -131,25 +131,4 @@ public struct SpeechRecognitionConfiguration: Sendable, Equatable {
         self.contextualStrings = contextualStrings
         self.audioSession = audioSession
     }
-
-    /// Reads the options an app used to set on the request it handed to the legacy
-    /// `SpeechClient.startTask`.
-    init(_ request: SFSpeechAudioBufferRecognitionRequest) {
-        self.init(reportsPartialResults: request.shouldReportPartialResults,
-                  requiresOnDeviceRecognition: request.requiresOnDeviceRecognition,
-                  taskHint: TaskHint(request.taskHint),
-                  contextualStrings: request.contextualStrings)
-    }
-}
-
-extension SpeechRecognitionConfiguration.TaskHint {
-    init(_ hint: SFSpeechRecognitionTaskHint) {
-        switch hint {
-        case .dictation: self = .dictation
-        case .search: self = .search
-        case .confirmation: self = .confirmation
-        case .unspecified: self = .unspecified
-        @unknown default: self = .unspecified
-        }
-    }
 }
