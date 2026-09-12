@@ -4,7 +4,7 @@ Live speech-to-text for iOS 17+ as a stream of value types, on top of Apple's Sp
 framework. Swift 6, no dependencies.
 
 ```swift
-.package(url: "https://github.com/ludovicgrimbert/LGSpeechRecognizer", exact: "0.3.0")
+.package(url: "https://github.com/ludovicgrimbert/LGSpeechRecognizer", exact: "0.3.1")
 ```
 
 ## Usage
