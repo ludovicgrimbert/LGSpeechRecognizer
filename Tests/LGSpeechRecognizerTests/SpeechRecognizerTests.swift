@@ -1,10 +1,10 @@
 //
-//  SpeechClientTests.swift
+//  SpeechRecognizerTests.swift
 //  LGSpeechRecognizerTests
 //
 //  The live recogniser needs a microphone and permission prompts, so the tests cover what
 //  can run headless: the preview recogniser, the fail-fast paths of the live one, the
-//  configuration and error types, the models, and the deprecated SpeechClient layer.
+//  configuration and error types, and the models.
 //
 
 import Speech
@@ -102,19 +102,12 @@ struct ConfigurationTests {
         #expect(configuration.audioSession == .recording)
     }
 
-    @Test("a legacy request's options carry over")
-    func fromRequest() {
-        let request = SFSpeechAudioBufferRecognitionRequest()
-        request.shouldReportPartialResults = false
-        request.requiresOnDeviceRecognition = true
-        request.taskHint = .search
-        request.contextualStrings = ["Netflix", "Arte"]
-
-        let configuration = SpeechRecognitionConfiguration(request)
-        #expect(configuration.reportsPartialResults == false)
-        #expect(configuration.requiresOnDeviceRecognition == true)
-        #expect(configuration.taskHint == .search)
-        #expect(configuration.contextualStrings == ["Netflix", "Arte"])
+    @Test("task hints map onto the Speech framework's")
+    func taskHints() {
+        #expect(SpeechRecognitionConfiguration.TaskHint.unspecified.sfValue == .unspecified)
+        #expect(SpeechRecognitionConfiguration.TaskHint.dictation.sfValue == .dictation)
+        #expect(SpeechRecognitionConfiguration.TaskHint.search.sfValue == .search)
+        #expect(SpeechRecognitionConfiguration.TaskHint.confirmation.sfValue == .confirmation)
     }
 
     @Test("every error has a user-presentable description")
@@ -150,61 +143,5 @@ struct ModelTests {
         #expect(a == b)
         b.isFinal = true
         #expect(a != b)
-    }
-}
-
-@Suite("Deprecated SpeechClient layer")
-struct SpeechClientCompatibilityTests {
-
-    @available(*, deprecated)
-    @Test("previewValue streams and ends after finishTask()")
-    func previewValueStreamsThenEnds() async throws {
-        let client = SpeechClient(recognizer: PreviewSpeechRecognizer(wordDelay: .milliseconds(1)))
-        #expect(await client.requestAuthorization() == .authorized)
-
-        var transcripts: [String] = []
-        for try await result in await client.startTask(SFSpeechAudioBufferRecognitionRequest()) {
-            transcripts.append(result.bestTranscription.formattedString)
-            if transcripts.count == 3 { await client.finishTask() }
-        }
-        #expect(transcripts.count >= 3)
-        #expect(transcripts[0] == "Lorem ")
-        #expect(transcripts[2] == "Lorem ipsum dolor ")
-    }
-
-    @available(*, deprecated)
-    @Test("errors map onto the legacy Failure cases")
-    func failureMapping() {
-        struct Dummy: Error {}
-        #expect(SpeechClient.Failure(SpeechRecognitionError.audioSessionFailed(underlying: Dummy())) == .couldntConfigureAudioSession)
-        #expect(SpeechClient.Failure(SpeechRecognitionError.audioEngineFailed(underlying: Dummy())) == .couldntStartAudioEngine)
-        #expect(SpeechClient.Failure(SpeechRecognitionError.invalidInputFormat) == .couldntStartAudioEngine)
-        #expect(SpeechClient.Failure(SpeechRecognitionError.recognitionFailed(underlying: Dummy())) == .taskError)
-        #expect(SpeechClient.Failure(Dummy()) == .taskError)
-    }
-
-    @available(*, deprecated)
-    @Test("a custom client is still just its three operations")
-    func customClient() async throws {
-        let client = SpeechClient(
-            finishTask: {},
-            requestAuthorization: { .denied },
-            startTask: { _ in
-                AsyncThrowingStream { continuation in
-                    continuation.yield(SpeechRecognitionResult(
-                        bestTranscription: Transcription(formattedString: "hello", segments: []),
-                        isFinal: true,
-                        transcriptions: []
-                    ))
-                    continuation.finish()
-                }
-            }
-        )
-        #expect(await client.requestAuthorization() == .denied)
-        var results: [String] = []
-        for try await result in await client.startTask(SFSpeechAudioBufferRecognitionRequest()) {
-            results.append(result.bestTranscription.formattedString)
-        }
-        #expect(results == ["hello"])
     }
 }

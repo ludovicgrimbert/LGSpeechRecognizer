@@ -4,7 +4,7 @@ Live speech-to-text for iOS 17+ as a stream of value types, on top of Apple's Sp
 framework. Swift 6, no dependencies.
 
 ```swift
-.package(url: "https://github.com/ludovicgrimbert/LGSpeechRecognizer", exact: "0.3.1")
+.package(url: "https://github.com/ludovicgrimbert/LGSpeechRecognizer", from: "1.0.0")
 ```
 
 ## Usage
@@ -60,11 +60,11 @@ prompt — for SwiftUI previews and tests. Your own fake is a conformance to
   app is only ducked during the dictation.
 - Errors keep the system error they wrap (`underlyingError`) for logging.
 
-## Migrating from 0.2 (`SpeechClient`)
+## Migrating from 0.x
 
-`SpeechClient` still exists, deprecated, implemented over the protocol:
+`SpeechClient` (the 0.1/0.2 closure struct, deprecated in 0.3) is gone in 1.0.0:
 
-| 0.2 | 0.3 |
+| 0.x | 1.0 |
 |---|---|
 | `SpeechClient.liveValue` / `.previewValue` | `LiveSpeechRecognizer()` / `PreviewSpeechRecognizer()` as `any SpeechRecognizer` |
 | `startTask(SFSpeechAudioBufferRecognitionRequest())` | `transcribe()` / `transcribe(SpeechRecognitionConfiguration(...))` |
